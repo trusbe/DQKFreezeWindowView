@@ -409,6 +409,10 @@
         NSString *sectionReuseIdentifier = sectionViewCell.reuseIdentifier;
         [self.sectionScrollView addSubview:sectionViewCell];
         if ([self dequeueReusableSectionCellWithIdentifier:sectionReuseIdentifier forSection:section] == nil) {
+            if (_delegate) {
+                UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMainViewCell:)];
+                [sectionViewCell addGestureRecognizer:gestureRecognizer];
+            }
             [sectionViewCell setFrame:CGRectMake(section * self.cellViewSize.width, 0, self.cellViewSize.width, self.freezePoint.y)];
             NSMutableDictionary *sectionCellsWithSection = [self.cellIdentifier objectForKey:sectionReuseIdentifier];
             if (sectionCellsWithSection == nil) {
@@ -428,6 +432,10 @@
         NSString *rowReuseIdentifier = rowViewCell.reuseIdentifier;
         [self.rowScrollView addSubview:rowViewCell];
         if ([self dequeueReusableRowCellWithIdentifier:rowReuseIdentifier forRow:row] == nil) {
+            if (_delegate) {
+                UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMainViewCell:)];
+                [rowViewCell addGestureRecognizer:gestureRecognizer];
+            }
             switch (_style) {
                 case DQKFreezeWindowViewStyleDefault:
                     [rowViewCell setFrame:CGRectMake(0, self.cellViewSize.height * row, self.freezePoint.x, self.cellViewSize.height)];
